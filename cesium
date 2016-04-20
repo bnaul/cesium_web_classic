@@ -1,0 +1,85 @@
+#!/usr/bin/env python
+
+import sys
+
+
+def install():
+    """Copies cesium.yaml.example to ~/.config/cesium/cesium.yaml.
+    """
+    import os
+    import shutil
+    from distutils.dir_util import copy_tree
+
+    cfg = os.path.expanduser('~/.config/cesium/cesium.yaml')
+    cfg_dir = os.path.dirname(cfg)
+
+    if os.path.exists(cfg):
+        print('Existing configuration at {} -- not overwriting.'.format(cfg))
+        return
+
+    if not os.path.exists(cfg_dir):
+        os.makedirs(cfg_dir)
+
+    shutil.copyfile(os.path.join(os.path.dirname(__file__),
+                                 'cesium_app/cesium.yaml.example'),
+                    cfg)
+
+    print('Installed {}'.format(cfg))
+    print('\n' + '*' * 78)
+    print('Please customize configuration file with authentication tokens, etc.')
+    print('*' * 78)
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description='cesium web frontend')
+    parser.add_argument('--port', type=int, default=5000,
+                        help='Port number (default 5000)')
+    parser.add_argument('--host', type=str, default='127.0.0.1',
+                        help='Address to listen on (default 127.0.0.1)')
+    parser.add_argument('--debug', action='store_true',
+                        help='Enable debugging (default: False)')
+    parser.add_argument('--disable-auth', action='store_true',
+                        help='Disable user authentication')
+    parser.add_argument('--db-init', action='store_true',
+                        help='Initialize the database')
+    parser.add_argument('--install', action='store_true',
+                        help='Install configuration files')
+    parser.add_argument('--force', action='store_true',
+                        help='When used with db-init, overwrite existing db')
+    parser.add_argument('--version', action='store_true')
+    args = parser.parse_args()
+
+
+    if args.version:
+        from cesium_app import __version__
+        print('cesium_app {}'.format(__version__))
+
+        import cesium
+        print('cesium {}'.format(cesium.__version__))
+
+        sys.exit(0)
+
+    if args.install:
+        install()
+        sys.exit(0)
+
+    elif args.db_init:
+        from cesium_app.flask_app import db_init
+        db_init(force=args.force)
+        sys.exit(0)
+
+    from cesium_app.flask_app import app, cfg
+
+    if args.debug or cfg['testing']['debug']:
+        app.config['DEBUG'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
+
+    print("Launching server on %s:%s" % (args.host, args.port))
+    print("Logging to:", cfg['paths']['err_log_path'])
+    app.run(port=args.port, host=args.host, threaded=True)
+
+
+if __name__ == "__main__":
+    main()

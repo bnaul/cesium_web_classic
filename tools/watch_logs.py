@@ -101,7 +101,7 @@ def tail_f(filename, interval=1.0):
             f = open(filename, 'r')
             break
         except IOError:
-            sleep(1)
+            time.sleep(1)
 
     #Find the size of the file and move to the end
     st_results = os.stat(filename)

@@ -39,7 +39,7 @@ if __name__ == '__main__':
     reset_db()
 
     env = os.environ.copy()
-    web_client = subprocess.Popen(['make', 'monitor'], cwd=parent_path,
+    web_client = subprocess.Popen(['make'], cwd=parent_path,
                                   env=env)
 
     print('[test_frontend] Waiting for supervisord to launch all server processes...')
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 
         import cesium
         sample_data = pjoin(os.path.dirname(cesium.__file__),
-                            'data/sample_data')
+                            'tests/data')
         data_flag = '--data-path={}'.format(sample_data)
 
         print('[test_frontend] Launching CasperJS...')

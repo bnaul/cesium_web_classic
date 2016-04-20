@@ -38,7 +38,6 @@ paths:
 
     data_path:        '~/.local/cesium'
     err_log_path:     '{data_path}/logs/errors_and_warnings.log'
-    sample_data_path: '{data_path}/sample_data'
     models_folder:    '{data_path}/classifier_models'
     features_folder:  '{data_path}/extracted_features'
     ts_data_folder:  '{data_path}/ts_data'

@@ -1,17 +1,15 @@
-numpy>=1.10.4
-scipy>=0.16.0
-scikit-learn>=0.17.0
-pandas>=0.17.0
+https://github.com/cesium-ml/cesium/archive/master.zip # >=0.4.0 once released
+flask
+stormpath>=2.1.9
+git+git://github.com/stormpath/stormpath-flask.git@develop  # replace with Flask-Stormpath once they make a release with the Python 3 version
+docker-py
 parse
 psutil>=2.2.1
+rethinkdb
 requests
 colorlog
 matplotlib>=1.5.0
 pyyaml
-celery
-dask>=0.7.5
-xarray
-gatspy
-supersmoother  # TODO remove if gatspy removes requirement
-netCDF4
-cloudpickle
+waitress
+tornado
+pyzmq
