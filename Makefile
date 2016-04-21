@@ -8,7 +8,7 @@ SHELL = /bin/bash
 .DEFAULT_GOAL := supervisord
 
 db:
-	@if [[ -n `rethinkdb --daemon 2>&1 | grep "already in use"` ]]; then echo "[RethinkDB] is (probably) already running"; fi
+	@if [[ -n `rethinkdb --daemon --no-http-admin 2>&1 | grep "already in use"` ]]; then echo "[RethinkDB] is (probably) already running"; fi
 
 celery:
 	@if [[ -z `ps ax | grep -v grep | grep -v make | grep celery_tasks` ]]; then \
