@@ -96,7 +96,9 @@ watched.append(cfg['paths']['err_log_path'])
 
 
 def tail_f(filename, interval=1.0):
-    for timeout in range(10):
+    f = None
+
+    while not f:
         try:
             f = open(filename, 'r')
             break
