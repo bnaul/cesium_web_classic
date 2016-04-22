@@ -93,6 +93,9 @@ with nostdout():
     from cesium_app.config import cfg
 
 watched.append(cfg['paths']['err_log_path'])
+watched.append('log/error.log')
+watched.append('log/nginx-error.log')
+watched.append('log/nging-access.log')
 
 
 def tail_f(filename, interval=1.0):
@@ -130,7 +133,8 @@ def print_log(filename, color):
         print_col(line)
 
 
-colors = ['default', 'green', 'yellow', 'blue', 'magenta', 'cyan']
+colors = ['default', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'red',
+          'white']
 threads = [threading.Thread(target=print_log, args=(logfile, colors[n])) for
            (n, logfile) in enumerate(watched)]
 
