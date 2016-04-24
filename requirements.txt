@@ -1,7 +1,7 @@
 https://github.com/cesium-ml/cesium/archive/master.zip # >=0.4.0 once released
 flask
 stormpath>=2.1.9
-git+git://github.com/stormpath/stormpath-flask.git@develop  # replace with Flask-Stormpath once they make a release with the Python 3 version
+Flask-Stormpath>=0.4.5
 docker-py
 parse
 psutil>=2.2.1
